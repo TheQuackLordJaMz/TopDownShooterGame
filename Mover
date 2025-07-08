@@ -1,0 +1,32 @@
+using UnityEngine;
+
+namespace Topdown.Movement
+{
+    // Makes sure this GameObject always has a Rigidbody2D attached
+    [RequireComponent(typeof(Rigidbody2D))] 
+    public class Mover : MonoBehaviour
+    {
+        // How fast the object moves (set in Inspector)
+        [SerializeField] private float movementSpeed;
+
+        // Reference to the Rigidbody2D component
+        private Rigidbody2D body;
+
+        // Stores the current movement input direction (should be set elsewhere)
+        protected Vector3 currentInput;
+
+        // Called when the script instance is being loaded
+        private void Awake()
+        {
+            // Get the Rigidbody2D component attached to this GameObject
+            body = GetComponent<Rigidbody2D>();
+        }
+
+        // Called every fixed framerate frame (good for physics updates)
+        private void FixedUpdate()
+        {
+            // Apply movement: move the Rigidbody2D based on input and speed
+            body.linearVelocity = movementSpeed * currentInput * Time.fixedDeltaTime;
+        }
+    }
+}
