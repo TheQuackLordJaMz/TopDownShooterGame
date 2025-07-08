@@ -1,0 +1,24 @@
+using UnityEngine;
+using UnityEngine.InputSystem; // Needed for the new Input System types
+
+namespace Topdown.Movement
+{
+    // Makes sure this GameObject always has a PlayerInput component attached
+    [RequireComponent(typeof(PlayerInput))]
+    public class PlayerMovement : Mover
+    {
+        // This method is called automatically by the Input System when movement input is detected
+        private void OnMove(InputValue value) 
+        {
+            // Read the 2D input vector (e.g., from WASD, arrow keys, or joystick)
+            Vector3 playerInput = new Vector3(
+                value.Get<Vector2>().x,  // X-axis input (left/right)
+                value.Get<Vector2>().y,  // Y-axis input (up/down)
+                0f                       // Z-axis is 0 because we're in 2D
+            );
+
+            // Store the input in the base class's currentInput variable
+            currentInput = playerInput;
+        }
+    }
+}
